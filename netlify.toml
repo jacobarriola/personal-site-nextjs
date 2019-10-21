@@ -1,2 +1,7 @@
 [build]
   functions = "serverless-functions"
+
+[[redirects]]
+  from = "spotify-search"
+  to = "/.netlify/functions/spotify"
+  status = 200

@@ -17,9 +17,7 @@ const Spotify = () => {
   }
 
   const fetchData = async () => {
-    const res = await fetch(`https://api.spotify.com/v1/search?q=${query}&type=playlist&limit=12`, {headers: {
-      'Authorization': `Bearer BQDxFmPqX5c9bkHefbMSVzZGc_tK56S1sRuW7f7vgXARWtK8Hn1n56zRLvp-7g1Xur8RyuVCSVi70eELY2k`
-    }})
+    const res = await fetch(`/spotify-search/?query=${query}`)
   
     const json = await res.json()
   
@@ -29,7 +27,7 @@ const Spotify = () => {
   return (
     <Layout pageTitle="Spotify">
       <h1>Spotify</h1>
-      <form onSubmit={handleSubmission}>
+      <form onSubmit={handleSubmission} method="GET">
         <label htmlFor="search">
           <span>Search</span>
           <input
