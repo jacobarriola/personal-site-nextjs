@@ -17,17 +17,23 @@ const Spotify = () => {
   }
 
   const fetchData = async () => {
-    const res = await fetch(`/spotify-search/?query=${query}`)
-  
-    const {data} = await res.json()
-  
-    setItems(data.playlists)
+    const res = await fetch(`https://api.spotify.com/v1/search?q=${query}&type=playlist&limit=12`, {headers: {
+        'Authorization': `Bearer BQD53IhQ4wQgdQW3bwlbnKnLYdG6mHSfnDSopPDypiY9vC1rtTXIFyqEO3-gPFjnvEyPRAUtYJWj0aLHmg8`
+      }})
+
+      const json = await res.json()
+
+      if (json.error && json.error.status === 401) {
+        return alert(`Token expired`)
+      }
+    
+      setItems(json.playlists)
   }
 
   return (
     <Layout pageTitle="Spotify">
       <h1>Spotify</h1>
-      <form onSubmit={handleSubmission} method="GET">
+      <form onSubmit={handleSubmission}>
         <label htmlFor="search">
           <span>Search</span>
           <input
