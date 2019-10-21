@@ -19,9 +19,9 @@ const Spotify = () => {
   const fetchData = async () => {
     const res = await fetch(`/spotify-search/?query=${query}`)
   
-    const json = await res.json()
+    const {data} = await res.json()
   
-    setItems(json.playlists)
+    setItems(data.playlists)
   }
 
   return (
