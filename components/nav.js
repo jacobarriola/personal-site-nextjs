@@ -1,18 +1,46 @@
 import Link from 'next/link'
+import fetch from 'isomorphic-unfetch'
+import { useEffect, useState } from 'react'
 
-const Nav = () => (
+const Nav = () => {
+  const [ items, setItems ] = useState([])
+
+  useEffect(() => {
+    async function fetchData () {
+      const res = await fetch(`https://cdn.contentful.com/spaces/4pywjkutx049/environments/master/entries?access_token=a70d2276fb3f46ebc664b8aeab91d5cc7ee6ef7f9b6d2ce0aa8bdc56abb2d6b3&content_type=navigation`)
+
+      const json = await res.json()
+
+      populateNav(json.items[0].fields.items, json['includes'].Entry)
+    }
+
+    fetchData()
+  }, [])
+
+  const populateNav = (fields, entries)  => {
+    fields.forEach(item => {
+      const match = entries.find(entry => entry.sys.id === item.sys.id)
+      if (match) {
+        item.entry = match.fields
+      }
+    })
+
+    setItems(fields)
+  }
+
+  return (
   <nav>
     <ul>
-      <li>
-        <Link href='/'>
-          <a>Home</a>
-        </Link>
-      </li>
-      <li>
-        <Link href='/about'>
-          <a>About</a>
-        </Link>
-      </li>
+      {
+        items.map(item => (
+          <li key={item.sys.id}>
+            <Link href={item.entry.link}>
+              <a>{item.entry.name}</a>
+            </Link>
+          </li>
+          )
+        )
+      }
     </ul>
 
     <style jsx>{`
@@ -42,5 +70,6 @@ const Nav = () => (
     `}</style>
   </nav>
 )
+    }
 
 export default Nav
