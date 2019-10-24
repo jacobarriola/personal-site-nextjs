@@ -20,7 +20,7 @@ const Spotify = () => {
       `https://api.spotify.com/v1/search?q=${query}&type=playlist&limit=12`,
       {
         headers: {
-          Authorization: `Bearer BQApY5j-D8xf80NvFGF3zfT0TDzs4DkZEWik9VwNAgwXc1VhsZGmGAikw9WF0OOtZ3kelEF57LXEYLR3LT0`
+          Authorization: `Bearer BQAsRVMQrnwB5zssuI1-gwNuTcKC-RrJVxwk2TvEgIfLdrkTFVRa2Ek8FJAvOV82iYann5HNbVH-obVKwxU`
         }
       }
     );
